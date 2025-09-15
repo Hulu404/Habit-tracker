@@ -7,18 +7,24 @@ def main():
 
     while True:
 
-        comd = input(f"Enter the command:\n - 1 Add new scale\n - 2 show all scales\n - 3 add XP in scale\n - 4 finish the program\n ")
+        comd = input(f"Enter the command:\n - 1 Add new scale\n - 2 show all scales\n - 3 add text in scale\n - 4 finish the program\n ")
 
         if comd == "1":
 
             text = input("Enter the name of scale: ")
             scale_name = text
-            text = list()
+            text = dict()
 
+            days = int(input("Enter the number of days you want to master the skill: "))
+
+            progress_bar = []
+            text["days"] = days
+            text["progress_bar"] = progress_bar
             scales_dict[scale_name] = text
 
             # Блок записи в json-файл
-            print(make_json_file(scales_dict))
+            make_json_file(scales_dict)
+            print(show())
 
         elif comd == "2":
             show_scale_table(scales_dict)
