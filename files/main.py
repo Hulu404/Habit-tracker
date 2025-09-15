@@ -1,4 +1,5 @@
-from handlers import *
+from files.handlers import *
+
 
 def main():
 
@@ -15,12 +16,13 @@ def main():
             text = list()
 
             scales_dict[scale_name] = text
-            # Тут можно задать запись в json файл, чтобы сохранить отдельный список для каждого пользователя
 
-            show_scale_table(scales_dict)
+            # Блок записи в json-файл
+            print(make_json_file(scales_dict))
 
         elif comd == "2":
             show_scale_table(scales_dict)
+            print(show())
 
         elif comd == "3":
 
@@ -32,7 +34,7 @@ def main():
                 choose = input("Enter the scale name: ")
 
                 scales_dict[choose].append(25)
-                show_scale_table(scales_dict)
+                print(make_json_file(scales_dict))
 
         elif comd == "4":
             show_scale_table(scales_dict)
