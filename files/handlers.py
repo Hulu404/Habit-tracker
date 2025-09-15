@@ -1,5 +1,4 @@
 import json
-from prettytable import PrettyTable
 
 def show_scale_table(dictionary):
     for _ in dictionary.keys():
@@ -19,10 +18,3 @@ def show():
     with open("scales_archive/scales.json", "r", encoding="utf-8", newline="") as file:
         data = json.load(file)
 
-
-    if data:
-        # Создаем таблицу, используя ключи первого элемента как заголовки
-        table = PrettyTable(field_names=data[0].keys())
-        for item in data:
-            table.add_row(item.values())
-        print(table)
