@@ -2,7 +2,7 @@ import os
 import json
 from pathlib import Path
 from files.handlers import *
-
+import pandas as pd
 
 def main():
 
@@ -16,42 +16,47 @@ def main():
             scale(scales_dict)
 
         elif comd == "2":
-            for _ in os.listdir("files/scales_archive"):
-                print(_)
+            if os.listdir("files/scales_archive"):
+                for i in os.listdir(Path("files/scales_archive")):
+                    print(i)
 
-            name = input("Enter the name of scale: ")
+                name = input("Enter the name of scale: ")
+                if name + ".json" in os.listdir("files/scales_archive"):
+                    lines = []
+                    count = 0
+                    k = 1
+                    key_c = input("Enter name of skill which you have mastered: ")
+                    dict_scales = {key_c : []}
+                    print("Enter the text: ")
+                    while True:
+                        line = input(f"{k}| ")
+                        k += 1
 
-            if name + ".json" in os.listdir("files/scales_archive"):
-                lines = []
-                count = 0
-                k = 1
-                dict_scales = {name: []}
-                print("Enter the text: ")
-                while True:
-                    line = input(f"{k}| ")
-                    k += 1
+                        if line:
+                            lines.append(line)
+                        else:
+                            count += 1
 
-                    if line:
-                        lines.append(line)
-                    else:
-                        count += 1
+                        if count == 2: break
+                        else: continue
 
-                    if count == 2: break
-                    else: continue
+                    file_path = Path("files/scales_archive/" + name + ".json")
+                    dict_scales[key_c] = lines
+                    scales_dict[name] = dict_scales
+                    with open(file_path, "w", encoding="utf-8") as file:
+                        json.dump(scales_dict, file, ensure_ascii=False, indent=4)
 
-                file_path = Path("files/scales_archive" + name + ".json")
-                dict_scales[name] = lines
-                scales_dict[name] = dict_scales
-                with open(file_path, "w", encoding="utf-8") as file:
-                    json.dump(scales_dict, file, ensure_ascii=False, indent=4)
+                    with open(file_path, "r", encoding="utf-8", newline="") as file:
+                        data = json.load(file)
 
-                with open(file_path, "r", encoding="utf-8", newline="") as file:
-                    data = json.load(file)
+                    g = pd.DataFrame(data)
+                    print(g)
 
-                print(data)
-
+                else:
+                    print("No such file on directory!")
             else:
-                pass
+                print("No such file! Let's make it!\n")
+                scale(scales_dict)
 
         elif comd == "3": break
 

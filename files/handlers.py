@@ -17,20 +17,20 @@ def make_json_file(dictionary):
     return data
 
 def show(scale_name):
-    file_path = Path("files/scales_archive" + scale_name + ".json")
+    file_path = Path("files/scales_archive/" + scale_name + ".json")
     with open(file_path, "r", encoding="utf-8", newline="") as file:
         data = json.load(file)
 
 
 def scale(scales_dict):
     scale_name = input("Enter the name of scale: ")
-    file_path = Path("files/scales_archive" + scale_name + ".json")
+    file_path = Path("files/scales_archive")
 
     if scales_dict in os.listdir(file_path):  # Проверка существования файла
         print(f"Scale {scale_name} already exists!")
 
     else:  # В случае, если файла не сущетсвует, то он будет создаваться
-        file_path = Path(f"scales_archive/{scale_name}.json")
+        file_path = Path(f"files/scales_archive/{scale_name}.json")
         days = int(input("Enter the days: "))
         scales_dict[scale_name] = {}
         scales_dict[scale_name]["days"] = days
