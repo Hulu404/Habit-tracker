@@ -1,14 +1,10 @@
+from files.handlers import *
 import os
 import json
 from pathlib import Path
-from files.handlers import *
-import pandas as pd
 
 def main():
-
     scales_dict = {}
-    file_path = None
-
     while True:
         comd = input(f"Enter the command:\n - 1 Add new scale\n - 2 update scale\n - 3 finish program\n")
 
@@ -22,11 +18,14 @@ def main():
 
                 name = input("Enter the name of scale: ")
                 if name + ".json" in os.listdir("files/scales_archive"):
+                    file_way = Path("files/scales_archive/" + name + ".json")
+                    with open(file_way, "r", encoding="utf-8", newline="") as file:
+                        data = json.load(file)
+
                     lines = []
                     count = 0
                     k = 1
                     key_c = input("Enter name of skill which you have mastered: ")
-                    dict_scales = {key_c : []}
                     print("Enter the text: ")
                     while True:
                         line = input(f"{k}| ")
@@ -40,17 +39,11 @@ def main():
                         if count == 2: break
                         else: continue
 
-                    file_path = Path("files/scales_archive/" + name + ".json")
-                    dict_scales[key_c] = lines
-                    scales_dict[name] = dict_scales
-                    with open(file_path, "w", encoding="utf-8") as file:
-                        json.dump(scales_dict, file, ensure_ascii=False, indent=4)
+                    data[key_c] = " ".join(lines)
 
-                    with open(file_path, "r", encoding="utf-8", newline="") as file:
-                        data = json.load(file)
+                    with open(file_way, "w", encoding="utf-8") as file:
+                        json.dump(data, file, ensure_ascii=False, indent=4)
 
-                    g = pd.DataFrame(data)
-                    print(g)
 
                 else:
                     print("No such file on directory!")
